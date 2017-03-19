@@ -377,8 +377,13 @@ export GTAGSLABEL=pygments
 
 # Tips / usage
 #
-# Mass renaming: zmv (*).txt $1.html
+# Mass renaming: 
+#     zmv (*).txt $1.html
 #
 # Path replacement:
 #    /usr/bin $ cd bin lib
 #    /usr/lib $ # we've replaced bin with lib in the current path
+#
+# Globbing: 
+#    $ ls **/*.cpp # Recursively search and list CPP files.
+#    $ wc **/*.md # Count words in markdown files.
