@@ -38,6 +38,11 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Tell Antigen that you're done.
 antigen apply
 
+# Disable bracketed paste to for emacs shell.
+if [[ $TERM = dumb ]]; then
+  unset zle_bracketed_paste
+fi
+
 # Use theme from file.
 source $HOME/.zsh/themes/prose.zsh-theme
 
@@ -178,6 +183,13 @@ alias glog='git log --color --graph --date=iso --pretty=format:"%Cred%h%Creset -
 
 # Ctrl-R to start incremental history search
 bindkey "^R" history-incremental-search-backward
+
+# Note: 'history' command is mapped to 'fc -l 1'
+# this makes it not possible to pass in additional cmd keys,
+# for example `history -i` results in error
+# See: https://github.com/robbyrussell/oh-my-zsh/issues/739
+# The workaround is to run in manually (the -i key displays timestamps for history items):
+# fc -i -l 1
 
 # Replaced with history-substring-search plugin
 # http://unix.stackexchange.com/questions/16101/zsh-search-history-on-up-and-down-keys
@@ -349,13 +361,19 @@ z() {
   cd "$(_z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 }
 
+# Node version manager, install from
+# https://github.com/creationix/nvm/blob/master/README.md
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Fix for scrolling issue in neovim, 
+# see https://github.com/neovim/neovim/issues/6802
+export COLORTERM=gnome-terminal
 
 source ~/.i3/keyboard-setup.sh
 
 # vim as man pager
-export MANPAGER="env MAN_PN=1 vim -M +MANPAGER -"
+# export MANPAGER="env MAN_PN=1 vim -M +MANPAGER -"
 
 # Codi - vim plugin
 # See: https://github.com/metakirby5/codi.vim
@@ -387,3 +405,4 @@ export GTAGSLABEL=pygments
 # Globbing: 
 #    $ ls **/*.cpp # Recursively search and list CPP files.
 #    $ wc **/*.md # Count words in markdown files.
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
