@@ -390,6 +390,15 @@ codi() {
     Codi $syntax" "$@"
 }
 
+# Sharing a tiny bash function I'd written, to look up day for a date. 
+# Find it useful.
+# https://twitter.com/curioman2/status/1021427844050649089/photo/1
+# For example: sd 25 - highligh all 25th in every month
+sd ()
+{
+ cal -y | GREP_COLORS="mt=07;32" \grep --color=always -EC 4 " $1 |^$1 " | GREP_COLORS="sl=11;33:mt=07;33" \grep --color=always -B2 -A6 '[A-Z][a-z] '
+}
+
 # for GNU global
 export GTAGSLABEL=pygments
 
