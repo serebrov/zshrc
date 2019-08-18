@@ -6,6 +6,51 @@ then
 fi
 source ~/.zsh/antigen/antigen.zsh
 
+# Zsh tips / usage
+#
+# Mass renaming: 
+#     zmv (*).txt $1.html
+#
+# Path replacement:
+#    /usr/bin $ cd bin lib
+#    /usr/lib $ # we've replaced bin with lib in the current path
+#
+# Globbing: 
+#    $ ls **/*.cpp # Recursively search and list CPP files.
+#    $ wc **/*.md # Count words in markdown files.
+
+# Summary of features / shortcuts from the setup below:
+#
+# - syntax highlighing
+# - fish-like auto suggestions (complete with -> or End)
+# - cpv - cp with progress (via rsync) (cp)
+# - z dirname - jump to recently used directory
+# - ctrg-g - fuzzy 'z' (fzf-z)
+# - ctrl-p - search and edit file (zsh-fuzzy-search-and-edit)
+# - cd ..(tab) - fuzzy completion for dir name (zsh-interactive-cd)
+# - open files directly with ./filename (auto-do some kungfoo setup)
+# - interactive git tools (ga, glo, gi, gd, grh, gcf, gss, gclean) (forgit)
+# - some git aliases (gst, gpoh, glog)
+# - ctrl-r to search shell history with fzf
+# - l, la, lr, lt, ll, ldot, lS, lart, lrt (common aliases for ls)
+# - vc - run vim in file manager mode
+# - ctrl-z to put an app back forground (after putting it to background with ctrl-z)
+# - mirror - run mplayer in "mirror" mode (show webcam picture)
+# - fzf functions:
+#   - cf - fuzzy cd from anywhere
+#   - fshow - git commit browser
+#   - fco - checkout git branch with fzf
+#   - fcoc - checkout commit with fzf
+#   - fcs - get commit sha
+#   - fstash - git stash browser (ctrl-d show diff, ctrl-b checkout stash as branch)
+# - fuck to correct command error after typo (thefuck)
+# - codi to start vim codi extension
+# - sd 25 - show calendar with 25th of each month highlighted
+
+
+# To update bundles, use `antigen update`.
+# Bundles are under `~/.antigen`.
+
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
@@ -32,6 +77,54 @@ antigen bundle command-not-found
 # Syntax highlighting bundle, for example, highlight wrong command names in red.
 antigen bundle zsh-users/zsh-syntax-highlighting
 
+# Fish-like auto suggestions
+antigen bundle zsh-users/zsh-autosuggestions
+
+# npm autocompletion
+antigen bundle akoenig/npm-run.plugin.zsh
+
+# alias tips: show a tip when the command run has an alias
+antigen bundle djui/alias-tips
+
+# run fzf for cd
+antigen bundle changyuheng/zsh-interactive-cd
+
+# extension for z - ctrl-g or fzfz to run fzf-ed version of z
+antigen bundle andrewferrier/fzf-z
+
+# search for file and edit it with ctrl+p
+antigen bundle mafredri/zsh-async
+antigen bundle seletskiy/zsh-fuzzy-search-and-edit
+
+export EDITOR=nvim
+bindkey '^P' fuzzy-search-and-edit
+
+# interactive git tools:
+# ga - git add selector
+# glo - log viewer
+# gi - git ignore generator
+# gd - diff viewer
+# grh - git reset HEAD <file> selector
+# gcf - git checkout <file> selector
+# gss - git stash viewer
+# gclean - git clean selector
+#
+# Default keybindings:
+#   Enter 	Confirm
+#   Tab 	Toggle mark
+#   ? 	Toggle preview window
+#   Alt - W 	Toggle preview wrap
+#   Ctrl - S 	Toggle sort
+#   Ctrl - R 	Toggle selection
+#   Ctrl - K / P 	Selection move up
+#   Ctrl - J / N 	Selection move down
+#   Alt - K / P 	Preview move up
+#   Alt - J / N 	Preview move down
+antigen bundle wfxr/forgit
+
+# show execution time for long commands (>= 3 sec)
+antigen bundle popstas/zsh-command-time
+
 # Load the theme.
 # antigen theme prose
 
@@ -40,7 +133,7 @@ antigen apply
 
 # Disable bracketed paste to for emacs shell.
 if [[ $TERM = dumb ]]; then
-  unset zle_bracketed_paste
+    unset zle_bracketed_paste
 fi
 
 # Use theme from file.
@@ -112,35 +205,49 @@ export KEYTIMEOUT=1
 # alias cp='cp -i'
 # alias mv='mv -i'
 
+# Redefine ls aliases to exa
+# https://the.exa.website/, https://github.com/ogham/exa
+alias ls='exa'                                                         # ls
+alias l='exa -lbF --git'                                               # list, size, type, git
+alias ll='exa -lbGF --git'                                             # long list
+alias llm='exa -lbGF --git --sort=modified'                            # long list, modified date sort
+alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'  # all list
+alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
+
+# speciality views
+alias lS='exa -1'			                                                  # one column, just names
+alias lt='exa --tree --level=2'                                         # tree
+
 # zsh is able to auto-do some kungfoo
 # depends on the SUFFIX :)
 if [ ${ZSH_VERSION//\./} -ge 420 ]; then
-  # open browser on urls
-  _browser_fts=(htm html de org net com at cx nl se dk dk php)
-  for ft in $_browser_fts ; do alias -s $ft=$BROWSER ; done
+    # note: 'alias -s' defines suffix alias to open the specified app for the file suffix 
+    # open browser on urls
+    _browser_fts=(htm html de org net com at cx nl se dk dk php)
+    for ft in $_browser_fts ; do alias -s $ft=$BROWSER ; done
 
-  _editor_fts=(cpp cxx cc c hh h inl asc txt TXT tex)
-  for ft in $_editor_fts ; do alias -s $ft=$EDITOR ; done
+    _editor_fts=(cpp cxx cc c hh h inl asc txt TXT tex js ts py vue)
+    for ft in $_editor_fts ; do alias -s $ft=$EDITOR ; done
 
-  _image_fts=(jpg jpeg png gif mng tiff tif xpm)
-  for ft in $_image_fts ; do alias -s $ft=$XIVIEWER; done
+    _image_fts=(jpg jpeg png gif mng tiff tif xpm)
+    for ft in $_image_fts ; do alias -s $ft=$XIVIEWER; done
 
-  _media_fts=(ape avi flv mkv mov mp3 mpeg mpg ogg ogm rm wav webm)
-  for ft in $_media_fts ; do alias -s $ft=mplayer ; done
+    _media_fts=(ape avi flv mkv mov mp3 mpeg mpg ogg ogm rm wav webm)
+    for ft in $_media_fts ; do alias -s $ft=mplayer ; done
 
-  #read documents
-  alias -s pdf=acroread
-  alias -s ps=gv
-  alias -s dvi=xdvi
-  alias -s chm=xchm
-  alias -s djvu=djview
+    # read documents
+    alias -s pdf=acroread
+    alias -s ps=gv
+    alias -s dvi=xdvi
+    alias -s chm=xchm
+    alias -s djvu=djview
 
-  #list whats inside packed file
-  alias -s zip="unzip -l"
-  alias -s rar="unrar l"
-  alias -s tar="tar tf"
-  alias -s tar.gz="echo "
-  alias -s ace="unace l"
+    #list whats inside packed file
+    alias -s zip="unzip -l"
+    alias -s rar="unrar l"
+    alias -s tar="tar tf"
+    alias -s tar.gz="echo "
+    alias -s ace="unace l"
 fi
 
 
@@ -402,16 +509,9 @@ sd ()
 # for GNU global
 export GTAGSLABEL=pygments
 
-# Tips / usage
-#
-# Mass renaming: 
-#     zmv (*).txt $1.html
-#
-# Path replacement:
-#    /usr/bin $ cd bin lib
-#    /usr/lib $ # we've replaced bin with lib in the current path
-#
-# Globbing: 
-#    $ ls **/*.cpp # Recursively search and list CPP files.
-#    $ wc **/*.md # Count words in markdown files.
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval $(thefuck --alias)
