@@ -6,6 +6,9 @@ then
 fi
 source ~/.zsh/antigen/antigen.zsh
 
+# For brew
+export PATH="/usr/local/bin:/usr/local/sbin:~/bin:$PATH"
+
 # Zsh tips / usage
 #
 # Mass renaming: 
