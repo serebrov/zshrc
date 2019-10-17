@@ -50,6 +50,11 @@ source ~/.zsh/antigen/antigen.zsh
 
 # To update bundles, use `antigen update`.
 # Bundles are under `~/.antigen`.
+#
+# Note: antigen uses cache, after adding new plugins, run
+#   `anigen reset`
+# otherwise the new plugins might not be loaded in the new shell session
+# (and manual source ~/.zshrc may be needed).
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -96,8 +101,7 @@ antigen bundle andrewferrier/fzf-z
 antigen bundle mafredri/zsh-async
 antigen bundle seletskiy/zsh-fuzzy-search-and-edit
 
-export EDITOR=nvim
-bindkey '^P' fuzzy-search-and-edit
+antigen bundle sobolevn/wakatime-zsh-plugin
 
 # interactive git tools:
 # ga - git add selector
@@ -131,6 +135,11 @@ antigen bundle popstas/zsh-command-time
 # Tell Antigen that you're done.
 antigen apply
 
+# for seletskiy/zsh-fuzzy-search-and-edit
+# search for file and edit it with ctrl+p
+export EDITOR=nvim
+bindkey '^P' fuzzy-search-and-edit
+
 # Disable bracketed paste to for emacs shell.
 if [[ $TERM = dumb ]]; then
     unset zle_bracketed_paste
@@ -152,11 +161,15 @@ export KEYTIMEOUT=1
 
 # common aliases (common-aliases plugin)
 # ls, the common ones I use a lot shortened for rapid fire usage
-# alias l='ls -lFh'     #size,show type,human readable
-# alias la='ls -lAFh'   #long list,show almost all,show type,human readable
-# alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
-# alias lt='ls -ltFh'   #long list,sorted by date,show type,human readable
-# alias ll='ls -l'      #long list
+# alias l='ls -lFh'     # size,show type,human readable
+#                       Show type: / - dir, @ - symlink, * - exec, | - FIFO, = - socket, > - door.
+#                       See: https://en.wikipedia.org/wiki/Unix_file_types
+# alias la='ls -lAFh'   # long list,show almost all,show type,human readable
+#                       # almost all - no `.` and `..`
+# alias lr='ls -tRFh'   # sorted by date,recursive,show type,human readable
+# alias lt='ls -ltFh'   # long list,sorted by date,show type,human readable
+# alias ll='ls -l'      # long list
+alias ll='ls -lAhp'    #long list, all, human, show type, add / for dirs
 # alias ldot='ls -ld .*'
 # alias lS='ls -1FSsh'
 # alias lart='ls -1Fcart'
@@ -207,16 +220,16 @@ export KEYTIMEOUT=1
 
 # Redefine ls aliases to exa
 # https://the.exa.website/, https://github.com/ogham/exa
-alias ls='exa'                                                         # ls
-alias l='exa -lbF --git'                                               # list, size, type, git
-alias ll='exa -lbGF --git'                                             # long list
-alias llm='exa -lbGF --git --sort=modified'                            # long list, modified date sort
-alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'  # all list
-alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
-
-# speciality views
-alias lS='exa -1'			                                                  # one column, just names
-alias lt='exa --tree --level=2'                                         # tree
+# alias ls='exa'                                                         # ls
+# alias l='exa -lbF --git'                                               # list, size, type, git
+# alias ll='exa -lbGF --git'                                             # long list
+# alias llm='exa -lbGF --git --sort=modified'                            # long list, modified date sort
+# alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'  # all list
+# alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # all + extended list
+# 
+# # speciality views
+# alias lS='exa -1'			                                                  # one column, just names
+# alias lt='exa --tree --level=2'                                         # tree
 
 # zsh is able to auto-do some kungfoo
 # depends on the SUFFIX :)
