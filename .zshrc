@@ -370,9 +370,10 @@ mirror(){ mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2; }
 [ -f /home/seb/.travis/travis.sh ] && source /home/seb/.travis/travis.sh
 # gvm
 #[[ -s "/home/seb/.gvm/scripts/gvm" ]] && source "/home/seb/.gvm/scripts/gvm"
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/web
-source /usr/local/bin/virtualenvwrapper.sh
+
+# export WORKON_HOME=$HOME/.virtualenvs
+# export PROJECT_HOME=$HOME/web
+# [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
 #export NVIM_TUI_ENABLE_TRUE_COLOR=1
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
