@@ -493,8 +493,6 @@ export NVM_DIR="$HOME/.nvm"
 # see https://github.com/neovim/neovim/issues/6802
 export COLORTERM=gnome-terminal
 
-source ~/.i3/keyboard-setup.sh
-
 # vim as man pager
 # export MANPAGER="env MAN_PN=1 vim -M +MANPAGER -"
 
