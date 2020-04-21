@@ -300,7 +300,7 @@ fi
 # ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
 alias -g puc='phpunit --colors'
 alias -g gst='git status --short --branch'
-alias gpoh='git push origin HEAD'
+alias gpoh='git push -u origin HEAD'
 # View abbreviated SHA, description, history graph, time and author
 alias glog='git log --color --graph --date=iso --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset" --abbrev-commit --'
 
