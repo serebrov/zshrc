@@ -76,7 +76,7 @@ antigen bundle pip
 antigen bundle z
 antigen bundle history-substring-search
 # dotenv - Automatically load your project ENV variables from `.env` file when you `cd` into project root directory.
-antigen bundle dotenv
+# antigen bundle dotenv
 # antigen bundle tmux
 # If the command is not found, but present in repositories, it
 # will show extended info on how to install it.
