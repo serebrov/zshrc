@@ -516,6 +516,27 @@ codi() {
     Codi $syntax" "$@"
 }
 
+# Git extras
+# Cool commands:
+# git summary - repo summary
+# git effort --above 20 - files with > 20 commits or active > 20 days
+# git ignore file_name - add file to .gitignore
+# git info - all remotest, branches, etc
+# git show-unmerged-branches - show unmerged branches
+# git show-tree - history tree
+# git standup -a John -d 7 - show Jonh's commits in recent 7 days
+# git touch - touch file and add it to git
+# git local-commits - commits that are not pushed yet
+# git missing - print out which commits are on one branch or the other but not both.
+# git delta - lists files that differ from another branch.
+# git ignore-io vim python - generate sample gitignore file from gitignore.io for vim and python
+#     git ignore-io -s ja - search for type on gitignore.io
+# git rename-branch - rename branch
+# git commits-since - show commits since given time
+# git brv - list branches ordered by last commit
+#
+source ~/web/git-extras/etc/git-extras-completion.zsh
+
 # Sharing a tiny bash function I'd written, to look up day for a date. 
 # Find it useful.
 # https://twitter.com/curioman2/status/1021427844050649089/photo/1
