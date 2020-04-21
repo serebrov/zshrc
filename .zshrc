@@ -552,9 +552,11 @@ export GTAGSLABEL=pygments
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# psql on mac (brew install libpq)
+export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 eval $(thefuck --alias)
 
 export UID=$UID
 export GID=$GID
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
