@@ -560,3 +560,5 @@ eval $(thefuck --alias)
 export UID=$UID
 export GID=$GID
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+# Override the gs (ghostscript) command with gst alias
+alias gs=gst
