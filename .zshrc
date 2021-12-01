@@ -104,7 +104,7 @@ antigen bundle andrewferrier/fzf-z
 antigen bundle mafredri/zsh-async
 antigen bundle seletskiy/zsh-fuzzy-search-and-edit
 
-antigen bundle sobolevn/wakatime-zsh-plugin
+# antigen bundle sobolevn/wakatime-zsh-plugin
 
 # interactive git tools:
 # ga - git add selector
