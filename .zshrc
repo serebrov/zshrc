@@ -154,6 +154,11 @@ source $HOME/.zsh/themes/prose.zsh-theme
 # no lag on normal / insert mode switch
 # see http://dougblack.io/words/zsh-vi-mode.html
 export KEYTIMEOUT=1
+# From the readme:
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vi-mode
+# A low $KEYTIMEOUT value (< 15) means that key bindings that
+# need multiple characters, like vv, will be very difficult to trigger. 
+bindkey -M vicmd '^V' edit-command-line # this remaps `vv` to `Ctrl-V`
 
 # z plugin - jump to most recent matching dir
 # z foo         cd to most frecent dir matching foo
