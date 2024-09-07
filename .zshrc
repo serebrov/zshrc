@@ -1,5 +1,4 @@
-if [[ ! -d ~/.zsh/antigen ]]
-then
+if [[ ! -d ~/.zsh/antigen ]] then
   # Install package manager.
   # It keeps the installed packages under ~/.antigen
   git clone https://github.com/zsh-users/antigen.git ~/.zsh/antigen
@@ -8,6 +7,11 @@ source ~/.zsh/antigen/antigen.zsh
 
 # For brew
 export PATH="/usr/local/bin:/usr/local/sbin:~/bin:$PATH"
+
+# See https://stackoverflow.com/a/57591830
+# To avoid "Inappropriate ioctl for device" error.
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # Zsh tips / usage
 #
@@ -303,6 +307,9 @@ fi
 # ggpull='git pull origin $(current_branch)'
 # ggpush='git push origin $(current_branch)'
 # ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
+
+# Override `gl` to show log (insted of `git pull`)
+alias -g gl=glo  
 alias -g puc='phpunit --colors'
 alias -g gst='git status --short --branch'
 alias gpoh='git push -u origin HEAD'
@@ -382,7 +389,8 @@ mirror(){ mplayer -vf mirror -v tv:// -tv device=/dev/video0:driver=v4l2; }
 
 #export NVIM_TUI_ENABLE_TRUE_COLOR=1
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
+# export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
+export FZF_DEFAULT_COMMAND="rg . --hidden --iglob '!.git' -l -g ''"
 
 # cf - fuzzy cd from anywhere
 # ex: cf word1 word2 ... (even part of a file name)
@@ -540,7 +548,7 @@ codi() {
 # git commits-since - show commits since given time
 # git brv - list branches ordered by last commit
 #
-source ~/web/git-extras/etc/git-extras-completion.zsh
+# source ~/web/git-extras/etc/git-extras-completion.zsh
 
 # Sharing a tiny bash function I'd written, to look up day for a date. 
 # Find it useful.
@@ -560,10 +568,33 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # psql on mac (brew install libpq)
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
+
+# special prompt for shell running from nnn
+[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1"
 
 export UID=$UID
 export GID=$GID
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
+# Roamer, https://github.com/abaldwin88/roamer/blob/master/doc/faq.md
+# export PATH="/Users/seb/Library/Python/3.11/bin:$PATH"
+
+# use python3 by default
+# see https://opensource.com/article/19/5/python-3-default-mac
+# alias python=/opt/homebrew/bin/python3
+
 # Override the gs (ghostscript) command with gst alias
 alias gs=gst
+
+alias love=~/love.app/Contents/MacOS/love
+
+export BAT_THEME=OneHalfLight
+
+# source /Users/seb/.docker/init-zsh.sh || true # Added by Docker Desktop
+export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
+
+# psql and other postgres tools
+export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/16/bin"
+
+source /Users/seb/.config/broot/launcher/bash/br
