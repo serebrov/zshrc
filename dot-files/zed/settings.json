@@ -1,0 +1,54 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette
+{
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  "vim_mode": true,
+  "vim": {
+    // "always": use system clipboard when no register is specified
+    // "never": don't use system clipboard unless "+ or "* is specified
+    // "on_yank": use system clipboard for yank operations when no register is specified
+    "use_system_clipboard": "always",
+    // Let `f` and `t` motions extend across multiple lines
+    "use_multiline_find": true,
+    // Let `f` and `t` motions match case insensitively if the target is lowercase
+    "use_smartcase_find": true,
+    // Use relative line numbers in normal mode, absolute in insert mode
+    // c.f. https://github.com/jeffkreeftmeijer/vim-numbertoggle
+    "toggle_relative_line_numbers": true
+    // Add custom digraphs (e.g. ctrl-k f z will insert a zombie emoji)
+    // "custom_digraphs": {
+    //   "fz": "🧟‍♀️"
+    // }
+  },
+  // disable cursor blink
+  "cursor_blink": false,
+  // use relative line numbers
+  "relative_line_numbers": true,
+  // hide the scroll bar
+  "scrollbar": { "show": "never" },
+  // prevent the buffer from scrolling beyond the last line
+  "scroll_beyond_last_line": "off",
+  // allow cursor to reach edges of screen
+  "vertical_scroll_margin": 0,
+  "gutter": {
+    // disable line numbers completely:
+    "line_numbers": false
+  },
+  "command_aliases": {
+    // "W": "w",
+    // "Wq": "wq",
+    // "Q": "q"
+  }
+}

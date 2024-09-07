@@ -1,0 +1,149 @@
+# XONSH WEBCONFIG START
+# XONSH WEBCONFIG END
+
+def setup_vi_mode():
+    """Setup vi mode for prompt.
+
+    See https://github.com/t184256/xontrib-prompt-vi-mode/blob/master/xontrib/prompt_vi_mode.xsh
+    """
+    from prompt_toolkit.key_binding import vi_state
+
+    # This enableds vi mode
+    $VI_MODE = True
+
+    def vi_mode():
+        state = __xonsh__.shell.shell.prompter.app.vi_state
+        mode = state.input_mode
+        if mode == vi_state.InputMode.INSERT:
+            return 'INS'
+        elif mode == vi_state.InputMode.INSERT_MULTIPLE:
+            return 'INS_MULT'
+        elif mode == vi_state.InputMode.NAVIGATION:
+            return 'NORM'
+        elif mode == vi_state.InputMode.REPLACE:
+            return 'REPLACE'
+        else:
+            return 'NORM'
+
+    $PROMPT_FIELDS['vi_mode'] = vi_mode
+
+    from prompt_toolkit.filters import ViInsertMode
+    from prompt_toolkit.key_binding.vi_state import InputMode
+
+    @events.on_ptk_create
+    def custom_keybindings(bindings, **kw):
+
+        @bindings.add('j', 'k')
+        def exit_insert_mode(event, filter=ViInsertMode):
+            vi_state = event.cli.vi_state
+            vi_state.reset(InputMode.NAVIGATION)
+
+    from xonsh.ptk_shell.shell import PromptToolkitShell
+
+    # Monkey patch the shell to add `enable_open_in_editor` parameter
+    # to `ptk_args`.
+    # See:
+    #  https://github.com/prompt-toolkit/python-prompt-toolkit/blob/490cf900188df357611cdc9358256be0e5ce2e16/src/prompt_toolkit/shortcuts/prompt.py#L297
+    #  https://github.com/xonsh/xonsh/blob/5305b54257072ba7b10fd08c46d75d1eb76b5bb5/xonsh/ptk_shell/shell.py#L198
+    original_init = PromptToolkitShell.__init__
+    def __init__(self, *args, **kwargs):
+        ptk_args = kwargs.get('ptk_args', {})
+        ptk_args['enable_open_in_editor'] = True
+        kwargs['ptk_args'] = ptk_args
+        original_init(self, *args, **kwargs)
+
+    PromptToolkitShell.__init__ = __init__
+
+setup_vi_mode()
+
+# https://github.com/xonsh/xonsh/blob/5305b54257072ba7b10fd08c46d75d1eb76b5bb5/xonsh/environ.py#L1236
+$AUTO_CD=True
+$XONSH_COLOR_STYLE = 'vs'
+$PROMPT = '\n{localtime} {YELLOW}{env_name} {BOLD_GREEN}{cwd} {gitstatus}{RESET}\n{BOLD_RED}>>> '
+$RIGHT_PROMPT = '\n{vi_mode}'
+
+$PATH.extend([
+    '/usr/local/sbin',
+    '/usr/local/bin',
+    '/usr/bin'
+])
+
+aliases['gst']='git status -sb'
+aliases['gco']='git checkout'
+aliases['gpoh']='git push origin HEAD'
+
+# Install xonsh extensions with xpip
+# For example: xpip install xontrib-z
+
+# https://github.com/AstraLuma/xontrib-z
+xontrib load z
+
+# https://github.com/jnoortheen/xontrib-broot
+xontrib load broot
+# The C-N implementation does not work, broot starts, but
+# does not change the directory on cd.
+$XONSH_BROOT_KEY = ''
+
+def setup_broot_key():
+    from xonsh.ptk_shell.key_bindings import carriage_return
+    from prompt_toolkit.keys import Keys
+    from prompt_toolkit.filters import Condition, EmacsInsertMode, ViInsertMode
+
+    @events.on_ptk_create
+    def custom_keybindings(bindings, **kw):
+
+        @bindings.add(Keys.ControlN)
+        def say_hi(event):
+            event.current_buffer.insert_text('br')
+            carriage_return(event.current_buffer, event.cli)
+setup_broot_key()
+
+# def setup_fzf_insert():
+#     import importlib
+#     fzf_widgets = importlib.import_module('xontrib.fzf-widgets')
+#     from fzf_widgets import fzf_insert_file
+
+#     @events.on_ptk_create
+#     def custom_keybindings(bindings, **kw):
+
+#          def handler(key_name):
+#             def do_nothing(func):
+#                 pass
+
+#             key = ${...}.get(key_name)
+#             if key:
+#                 print(f'Adding {key_name} handler for {key}')
+#                 return bindings.add(key)
+#             return do_nothing
+
+#         @handler('fzf_file_binding')
+#         def fzf_file(event):
+#             fzf_insert_file(event) + '!'
+# setup_fzf_insert()
+
+# https://xon.sh/python_virtual_environments.html
+xontrib load vox
+xontrib load autovox
+# # https://github.com/t184256/xontrib-prompt-vi-mode
+# xontrib load prompt_vi_mode
+# https://github.com/laloch/xontrib-fzf-widgets
+xontrib load fzf-widgets
+$fzf_history_binding = "c-r"  # Ctrl+R
+$fzf_ssh_binding = None # "c-s"      # Ctrl+S
+$fzf_file_binding = "c-t"      # Ctrl+T
+# Note: this would work really nice if it did not quote the dir name
+# then hitting enter would open the dir (because of $AUTO_CD)
+# But quoting prevents that.
+# See: https://github.com/laloch/xontrib-fzf-widgets/blob/8af47d1d684a14eb776485ef6f5c30c8e6807f60/xontrib/fzf-widgets.xsh#L96
+# Either fzf-widgets needs to be changed or xonsh's AUTO_CD needs to be changed.
+$fzf_dir_binding = "c-g"      # Ctrl+G
+$fzf_find_command = "fd"
+$fzf_find_dirs_command = "fd -t d"
+
+# $FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
+$FZF_DEFAULT_COMMAND="rg . --hidden --iglob '!.git' -l -g ''"
+
+xontrib load fish_completer
+
+# https://github.com/74th/xonsh-direnv
+xontrib load direnv

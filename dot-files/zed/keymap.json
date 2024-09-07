@@ -1,0 +1,113 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+      // "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      // "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      // "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      // "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"]
+      // "cmd-k H": ["workspace::SwapPaneInDirection", "Left"],
+      // "cmd-k J": ["workspace::SwapPaneInDirection", "Down"],
+      // "cmd-k L": ["workspace::SwapPaneInDirection", "Right"],
+      // "cmd-k K": ["workspace::SwapPaneInDirection", "Up"]
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // "j k": ["workspace::SendKeystrokes", "escape"]
+      // "space q": "editor::close"
+      // "ctrl-h": "pane::SplitLeft",
+      // "ctrl-j": "pane::SplitDown",
+      // "ctrl-k": "pane::SplitUp",
+      // "ctrl-l": "pane::SplitRight"
+
+      // Next and prev tabs with arrow keys
+      "left": "pane::ActivatePrevItem",
+      "right": "pane::ActivateNextItem",
+
+      // Move between splits with ctrl + hjkl
+      // Is it possible to do "split or switch" here? If I do not have a split on the
+      // left, it is created, otherwise I switch to it.
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"]
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "gd": "editor::GoToDefinition",
+      "space l": "workspace::ToggleLeftDock",
+      "ctrl-/": "workspace::ToggleBottomDock",
+      "space f": "file_finder::Toggle",
+      "space v": "pane::SplitRight",
+      "space h": "pane::SplitDown",
+      "space q": "pane::CloseActiveItem",
+      "space w": "workspace::Save",
+      "space t n": "workspace::NewWindow"
+      // "space p": "editor::Format",
+      // "shift-l": "pane::ActivateNextItem",
+      // "shift-h": "pane::ActivatePrevItem",
+      // "space w": "pane::CloseActiveItem",
+      // "space h": "workspace::ActivateNextPane",
+      // "space l": "workspace::ActivatePreviousPane"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "alt-h": "vim::Left",
+      "alt-l": "vim::Right",
+      "alt-j": "vim::Down",
+      "alt-k": "vim::Up"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      "shift-j": "editor::MoveLineDown",
+      "shift-k": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "space e": "workspace::ToggleLeftDock",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-/": "workspace::ToggleBottomDock",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+    }
+  },
+  {
+    "context": "Dock",
+    "bindings": {
+      "space l": "workspace::ToggleLeftDock",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+      // ... or other keybindings
+    }
+  }
+]
