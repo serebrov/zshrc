@@ -37,6 +37,62 @@ config.font = wezterm.font_with_fallback {
 config.font_size = 14.0
 config.color_scheme = 'Github (base16)'
 
+config.colors = {
+  tab_bar = {
+    -- The color of the inactive tab bar edge/divider
+    inactive_tab_edge = '#575758',
+
+    -- The color of the strip that goes along the top of the window
+    -- (does not apply when fancy tab bar is in use)
+    -- background = '#0b0022',
+    background = '#F0F0F0',
+
+    -- The active tab is the one that has focus in the window
+    active_tab = {
+      -- The color of the background area for the tab
+      bg_color = '#FFFFFF',
+      -- The color of the text for the tab
+      fg_color = '#000000',
+
+      -- Specify whether you want "Half", "Normal" or "Bold" intensity for the
+      -- label shown for this tab.
+      -- The default is "Normal"
+      intensity = 'Bold',
+
+      -- Specify whether you want "None", "Single" or "Double" underline for
+      -- label shown for this tab.
+      -- The default is "None"
+      underline = 'None',
+
+      -- Specify whether you want the text to be italic (true) or not (false)
+      -- for this tab.  The default is false.
+      italic = false,
+
+      -- Specify whether you want the text to be rendered with strikethrough (true)
+      -- or not for this tab.  The default is false.
+      strikethrough = false,
+    },
+
+    -- Inactive tabs are the tabs that do not have focus
+    inactive_tab = {
+      bg_color = '#F0F0F0',
+      fg_color = '#575758',
+
+      -- The same options that were listed under the `active_tab` section above
+      -- can also be used for `inactive_tab`.
+    },
+
+    -- The new tab button that let you create new tabs
+    new_tab = {
+      bg_color = '#F0F0F0',
+      fg_color = '#575758',
+
+      -- The same options that were listed under the `active_tab` section above
+      -- can also be used for `new_tab`.
+    },
+  },
+}
+
 config.window_padding = {
   left = 2,
   right = 2,
@@ -50,8 +106,8 @@ config.window_padding = {
 -- end)
 
 config.use_fancy_tab_bar = false
-config.show_tabs_in_tab_bar = false
-config.show_new_tab_button_in_tab_bar = false
+config.show_tabs_in_tab_bar = true
+config.show_new_tab_button_in_tab_bar = true
 
 -- disable line break icons
 -- config.
