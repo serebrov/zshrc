@@ -1,6 +1,17 @@
 # XONSH WEBCONFIG START
 # XONSH WEBCONFIG END
 
+"""
+# https://xon.sh/
+# Install with pipx
+brew install pipx
+
+pipx install 'xonsh[full]'
+pipx inject xonsh xontrib-z xontrib-fzf-widgets xontrib-broot
+pipx inject xonsh xontrib-prompt-vi-mode xonsh-direnv xontrib-fish-completer
+pipx inject xonsh xontrib-vox xontrib-z
+"""
+
 def setup_vi_mode():
     """Setup vi mode for prompt.
 
@@ -38,7 +49,7 @@ def setup_vi_mode():
             vi_state = event.cli.vi_state
             vi_state.reset(InputMode.NAVIGATION)
 
-    from xonsh.ptk_shell.shell import PromptToolkitShell
+    from xonsh.shells.ptk_shell import PromptToolkitShell
 
     # Monkey patch the shell to add `enable_open_in_editor` parameter
     # to `ptk_args`.
@@ -85,7 +96,7 @@ xontrib load broot
 $XONSH_BROOT_KEY = ''
 
 def setup_broot_key():
-    from xonsh.ptk_shell.key_bindings import carriage_return
+    from xonsh.shells.ptk_shell.key_bindings import carriage_return
     from prompt_toolkit.keys import Keys
     from prompt_toolkit.filters import Condition, EmacsInsertMode, ViInsertMode
 

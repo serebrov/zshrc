@@ -565,6 +565,9 @@ export GTAGSLABEL=pygments
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# pipx
+export PATH="$HOME/.local/bin:$PATH"
+
 # psql on mac (brew install libpq)
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
